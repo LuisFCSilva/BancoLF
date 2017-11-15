@@ -2,7 +2,11 @@ package objects;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+/**
+ * 
+ * @author Luis Fernando
+ *
+ */
 public abstract class Conta {
 
 	private Cliente cliente;
