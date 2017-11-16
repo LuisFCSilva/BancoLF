@@ -63,4 +63,68 @@ public abstract class Conta {
 
 	}
 
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public float getSaldo() {
+		return saldo;
+	}
+
+	public void setSaldo(float saldo) {
+		this.saldo = saldo;
+	}
+
+	public int getNumeroConta() {
+		return numeroConta;
+	}
+
+	public void setNumeroConta(int numeroConta) {
+		this.numeroConta = numeroConta;
+	}
+
+	public float getMensalidade() {
+		return mensalidade;
+	}
+
+	public void setMensalidade(float mensalidade) {
+		this.mensalidade = mensalidade;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public LocalDate getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(LocalDate dataCriacao) {
+		this.dataCriacao = dataCriacao;
+	}
+
+	public LocalDateTime getDataTransacao() {
+		return dataTransacao;
+	}
+
+	public void setDataTransacao(LocalDateTime dataTransacao) {
+		this.dataTransacao = dataTransacao;
+	}
+	
 }
