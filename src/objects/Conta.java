@@ -8,8 +8,6 @@ import excecoes.ContaInativaException;
 import excecoes.SaldoInsuficienteException;
 import excecoes.ValorInvalidoException;
 
-
-
 /**
  * 
  * @author Luis Fernando
@@ -25,7 +23,7 @@ public class Conta {
 	private String tipo;
 	private LocalDate dataCriacao;
 	private LocalDateTime dataTransacao;
-	
+
 	private NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance();
 
 	private enum Operacao {
@@ -36,6 +34,17 @@ public class Conta {
 
 	}
 
+	/**
+	 * 
+	 * @param valor
+	 *            -- valor do saque
+	 * @throws ValorInvalidoException
+	 *             -- Valores negativos e igual a zero
+	 * @throws ContaInativaException
+	 *             -- Status da conta igual FALSE
+	 * @throws SaldoInsuficienteException
+	 *             -- valor sacado MAIOR que o saldo da conta
+	 */
 	public void sacar(float valor) throws ValorInvalidoException, ContaInativaException, SaldoInsuficienteException {
 		if (valor <= saldo && valor > 0 && status) {
 			saldo -= valor;
@@ -49,11 +58,7 @@ public class Conta {
 			throw new ContaInativaException("A conta está inativa e não pode executar está operação.");
 		}
 	}
-	
-	/**
-	 * Metodo não será implementado (a principio)
-	 * @param valor
-	 */
+
 	public void depositar(float valor) {
 
 	}
@@ -62,6 +67,11 @@ public class Conta {
 
 	}
 
+	/**
+	 * Metodo não será implementado (a principio)
+	 * 
+	 * @param valor
+	 */
 	public void transferir(Conta conta, float valor) {
 
 	}
@@ -145,5 +155,5 @@ public class Conta {
 	public void setDataTransacao(LocalDateTime dataTransacao) {
 		this.dataTransacao = dataTransacao;
 	}
-	
+
 }
