@@ -1,14 +1,21 @@
 package objects;
 
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+
+import excecoes.ContaInativaException;
+import excecoes.SaldoInsuficienteException;
+import excecoes.ValorInvalidoException;
+
+
 
 /**
  * 
  * @author Luis Fernando
  *
  */
-public abstract class Conta {
+public class Conta {
 
 	private Cliente cliente;
 	private float saldo;
@@ -18,6 +25,8 @@ public abstract class Conta {
 	private String tipo;
 	private LocalDate dataCriacao;
 	private LocalDateTime dataTransacao;
+	
+	private NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance();
 
 	private enum Operacao {
 		SAQUE, DEPOSITO, TRANSFERENCIA, MENSALIDADE
@@ -27,8 +36,18 @@ public abstract class Conta {
 
 	}
 
-	public void sacar(float valor) {
-
+	public void sacar(float valor) throws ValorInvalidoException, ContaInativaException, SaldoInsuficienteException {
+		if (valor <= saldo && valor > 0 && status) {
+			saldo -= valor;
+			System.out.println("Saque no valor de " + formatoMoeda.format(valor) + " realizado com sucesso.");
+			gravarExtrato(valor, LocalDateTime.now(), Operacao.SAQUE);
+		} else if (valor > saldo) {
+			throw new SaldoInsuficienteException("Saldo insuficiente para realizar está operação.");
+		} else if (valor <= 0) {
+			throw new ValorInvalidoException("Valor inválido para executar está operação.");
+		} else if (status == false) {
+			throw new ContaInativaException("A conta está inativa e não pode executar está operação.");
+		}
 	}
 	
 	/**
