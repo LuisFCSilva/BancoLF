@@ -11,7 +11,7 @@ import excecoes.SaldoInsuficienteException;
 import excecoes.ValorInvalidoException;
 import objects.Conta;
 
-public class BancoLFTest {
+public class ContaTest {
 
 	private Conta conta = null;
 

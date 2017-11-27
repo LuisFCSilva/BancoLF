@@ -38,13 +38,13 @@ public class Conta {
 	/**
 	 * 
 	 * @param valor
-	 *            -- valor do saque
+	 *            -- Valor do saque
 	 * @throws ValorInvalidoException
-	 *             -- Valores negativos e igual a zero
+	 *             -- Valores negativos ou igual a zero
 	 * @throws ContaInativaException
 	 *             -- Status da conta igual FALSE
 	 * @throws SaldoInsuficienteException
-	 *             -- valor sacado MAIOR que o saldo da conta
+	 *             -- Valor sacado MAIOR que o saldo da conta
 	 * @throws BancoException
 	 *             -- Outros problemas e erros
 	 */
@@ -65,6 +65,17 @@ public class Conta {
 		}
 	}
 
+	/**
+	 * 
+	 * @param valor
+	 *             -- Valor depositado
+	 * @throws ValorInvalidoException
+	 *             -- Valores negativos ou igual a zero
+	 * @throws ContaInativaException
+	 *             -- Status da conta igual FALSE
+	 * @throws BancoException
+	 *             -- Outros problemas e erros
+	 */
 	public void depositar(float valor) throws ValorInvalidoException, ContaInativaException, BancoException {
 		if (valor > 0 && status) {
 			saldo += valor;
