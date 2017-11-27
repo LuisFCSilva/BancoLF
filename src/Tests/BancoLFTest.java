@@ -45,5 +45,23 @@ public class BancoLFTest {
 	public void sacarValorMaiorQueSaldo() throws Exception {
 		conta.sacar(100f);
 	}
+	
+	@Test
+	public void depositar50Reais() throws Exception {
+		conta.depositar(50f);
+		
+		assertEquals(100f, conta.getSaldo(), 0.1);
+	}
+	
+	@Test (expected=ValorInvalidoException.class)
+	public void depositarValorNegativo() throws Exception {
+		conta.depositar(-50);
+	}
+	
+	@Test (expected=ContaInativaException.class)
+	public void depositarContaInativa() throws Exception{
+		conta.setStatus(false);
+		conta.depositar(10f);
+	}
 
 }

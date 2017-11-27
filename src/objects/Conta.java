@@ -4,6 +4,7 @@ import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import excecoes.BancoException;
 import excecoes.ContaInativaException;
 import excecoes.SaldoInsuficienteException;
 import excecoes.ValorInvalidoException;
@@ -44,8 +45,11 @@ public class Conta {
 	 *             -- Status da conta igual FALSE
 	 * @throws SaldoInsuficienteException
 	 *             -- valor sacado MAIOR que o saldo da conta
+	 * @throws BancoException
+	 *             -- Outros problemas e erros
 	 */
-	public void sacar(float valor) throws ValorInvalidoException, ContaInativaException, SaldoInsuficienteException {
+	public void sacar(float valor)
+			throws ValorInvalidoException, ContaInativaException, SaldoInsuficienteException, BancoException {
 		if (valor <= saldo && valor > 0 && status) {
 			saldo -= valor;
 			System.out.println("Saque no valor de " + formatoMoeda.format(valor) + " realizado com sucesso.");
@@ -56,10 +60,21 @@ public class Conta {
 			throw new ValorInvalidoException("Valor inválido para executar está operação.");
 		} else if (status == false) {
 			throw new ContaInativaException("A conta está inativa e não pode executar está operação.");
+		} else {
+			throw new BancoException("Sistema temporariamente indisponível. Tente novamente mais tarde.");
 		}
 	}
 
-	public void depositar(float valor) {
+	public void depositar(float valor) throws ValorInvalidoException, ContaInativaException, BancoException {
+		if (valor > 0 && status) {
+			saldo += valor;
+		} else if (valor <= 0) {
+			throw new ValorInvalidoException("Valor inválido para executar está operação.");
+		} else if (status == false) {
+			throw new ContaInativaException("A conta está inativa e não pode executar está operação.");
+		} else {
+			throw new BancoException("Sistema temporariamente indisponível. Tente novamente mais tarde.");
+		}
 
 	}
 
