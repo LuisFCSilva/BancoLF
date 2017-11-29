@@ -79,6 +79,7 @@ public class Conta {
 	public void depositar(float valor) throws ValorInvalidoException, ContaInativaException, BancoException {
 		if (valor > 0 && status) {
 			saldo += valor;
+			System.out.println("Deposito no valor de " + formatoMoeda.format(valor) + " realizado com sucesso.");
 		} else if (valor <= 0) {
 			throw new ValorInvalidoException("Valor inválido para executar está operação.");
 		} else if (status == false) {
@@ -89,8 +90,21 @@ public class Conta {
 
 	}
 
-	public void pagarMensalidade() {
-
+	public void pagarMensalidade()
+			throws ValorInvalidoException, SaldoInsuficienteException, ContaInativaException, BancoException{
+		if(this.mensalidade <= saldo && this.mensalidade > 0 && status) {
+			saldo -= this.mensalidade;
+			System.out.println("Mensalidade no valor de " + formatoMoeda.format(this.mensalidade) + " paga com sucesso.");
+			gravarExtrato(this.mensalidade, LocalDateTime.now(), Operacao.MENSALIDADE);
+		} else if (this.mensalidade <= 0) {
+			throw new ValorInvalidoException("Valor inválido para executar está operação.");
+		} else if (this.mensalidade > saldo) {
+			throw new SaldoInsuficienteException("Saldo insuficiente para realizar está operação.");
+		} else if (status == false) {
+			throw new ContaInativaException("A conta está inativa e não pode executar está operação.");
+		} else {
+			throw new BancoException("Sistema temporariamente indisponível. Tente novamente mais tarde.");
+		}
 	}
 
 	/**

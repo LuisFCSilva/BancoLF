@@ -63,5 +63,32 @@ public class ContaTest {
 		conta.setStatus(false);
 		conta.depositar(10f);
 	}
+	
+	@Test
+	public void pagarMensalidade50Reais() throws Exception {
+		conta.setMensalidade(50f);
+		conta.pagarMensalidade();
+		assertEquals(0f, conta.getSaldo(), 0.1);
+	}
+	
+	@Test(expected=ValorInvalidoException.class)
+	public void pagarMensalidadeValorNegativo() throws Exception {
+		conta.setMensalidade(-50f);
+		conta.pagarMensalidade();
+	}
+	
+	@Test(expected=SaldoInsuficienteException.class)
+	public void pagarMensalidadeSemSaldo() throws Exception {
+		conta.setMensalidade(100f);
+		conta.pagarMensalidade();
+	}
+	
+	@Test(expected=ContaInativaException.class)
+	public void pagarMensalidadeContaInativa() throws Exception {
+		conta.setStatus(false);
+		conta.setMensalidade(50f);
+		conta.pagarMensalidade();
+		
+	}
 
 }
