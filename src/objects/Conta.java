@@ -68,7 +68,7 @@ public class Conta {
 	/**
 	 * 
 	 * @param valor
-	 *             -- Valor depositado
+	 *            -- Valor depositado
 	 * @throws ValorInvalidoException
 	 *             -- Valores negativos ou igual a zero
 	 * @throws ContaInativaException
@@ -89,7 +89,7 @@ public class Conta {
 		}
 
 	}
-	
+
 	/**
 	 * 
 	 * @throws ValorInvalidoException
@@ -102,10 +102,11 @@ public class Conta {
 	 *             -- Outros problemas e erros
 	 */
 	public void pagarMensalidade()
-			throws ValorInvalidoException, SaldoInsuficienteException, ContaInativaException, BancoException{
-		if(this.mensalidade <= saldo && this.mensalidade > 0 && status) {
+			throws ValorInvalidoException, SaldoInsuficienteException, ContaInativaException, BancoException {
+		if (this.mensalidade <= saldo && this.mensalidade > 0 && status) {
 			saldo -= this.mensalidade;
-			System.out.println("Mensalidade no valor de " + formatoMoeda.format(this.mensalidade) + " paga com sucesso.");
+			System.out
+					.println("Mensalidade no valor de " + formatoMoeda.format(this.mensalidade) + " paga com sucesso.");
 			gravarExtrato(this.mensalidade, LocalDateTime.now(), Operacao.MENSALIDADE);
 		} else if (this.mensalidade <= 0) {
 			throw new ValorInvalidoException("Valor inválido para executar está operação.");
@@ -127,8 +128,13 @@ public class Conta {
 
 	}
 
+	/**
+	 * 
+	 * @throws ContaInativaException
+	 *             -- Status da conta igual FALSE
+	 */
 	public void inativarConta() throws ContaInativaException {
-		if(status == true) {
+		if (status == true) {
 			status = false;
 			System.out.println("Conta " + tipo + " inativada com sucesso.");
 		} else {
