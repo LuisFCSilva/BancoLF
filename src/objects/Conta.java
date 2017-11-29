@@ -89,7 +89,18 @@ public class Conta {
 		}
 
 	}
-
+	
+	/**
+	 * 
+	 * @throws ValorInvalidoException
+	 *             -- Valores negativos ou igual a zero
+	 * @throws ContaInativaException
+	 *             -- Status da conta igual FALSE
+	 * @throws SaldoInsuficienteException
+	 *             -- Valor sacado MAIOR que o saldo da conta
+	 * @throws BancoException
+	 *             -- Outros problemas e erros
+	 */
 	public void pagarMensalidade()
 			throws ValorInvalidoException, SaldoInsuficienteException, ContaInativaException, BancoException{
 		if(this.mensalidade <= saldo && this.mensalidade > 0 && status) {
@@ -116,7 +127,13 @@ public class Conta {
 
 	}
 
-	public void inativarConta() {
+	public void inativarConta() throws ContaInativaException {
+		if(status == true) {
+			status = false;
+			System.out.println("Conta " + tipo + " inativada com sucesso.");
+		} else {
+			throw new ContaInativaException("A conta está inativa e não pode executar está operação.");
+		}
 
 	}
 

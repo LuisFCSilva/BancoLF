@@ -1,7 +1,7 @@
 package Tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -89,6 +89,18 @@ public class ContaTest {
 		conta.setMensalidade(50f);
 		conta.pagarMensalidade();
 		
+	}
+	
+	@Test
+	public void inativarContaTrue() throws Exception {
+		conta.inativarConta();
+		assertTrue(conta.isStatus() == false);
+	}
+	
+	@Test(expected=ContaInativaException.class)
+	public void inativarContaFalse() throws Exception {
+		conta.setStatus(false);
+		conta.inativarConta();
 	}
 
 }
