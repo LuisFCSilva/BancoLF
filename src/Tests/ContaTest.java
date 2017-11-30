@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import excecoes.BancoException;
 import excecoes.ContaInativaException;
 import excecoes.SaldoInsuficienteException;
 import excecoes.ValorInvalidoException;
@@ -92,7 +93,8 @@ public class ContaTest {
 	}
 	
 	@Test
-	public void inativarContaTrue() throws Exception {
+	public void inativarContaAtivaSaldoZero() throws Exception {
+		conta.setSaldo(0f);
 		conta.inativarConta();
 		assertTrue(conta.isStatus() == false);
 	}
@@ -100,6 +102,11 @@ public class ContaTest {
 	@Test(expected=ContaInativaException.class)
 	public void inativarContaFalse() throws Exception {
 		conta.setStatus(false);
+		conta.inativarConta();
+	}
+	
+	@Test(expected=BancoException.class)
+	public void inativarContaComSaldo() throws Exception {
 		conta.inativarConta();
 	}
 

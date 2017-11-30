@@ -130,14 +130,16 @@ public class Conta {
 
 	/**
 	 * 
-	 * @throws ContaInativaException
-	 *             -- Status da conta igual FALSE
+	 * @throws ContaInativaException -- Status da conta igual FALSE
+	 * @throws BancoException -- Retornar erro caso o saldo da conta esteja maior do que ZERO
 	 */
-	public void inativarConta() throws ContaInativaException {
-		if (status == true) {
+	public void inativarConta() throws ContaInativaException, BancoException {
+		if (status == true && saldo == 0) {
 			status = false;
 			System.out.println("Conta " + tipo + " inativada com sucesso.");
-		} else {
+		} else if (saldo > 0 && status) {
+			throw new BancoException("A conta possui saldo e não pode ser inativada.");
+		} else if (status == false) {
 			throw new ContaInativaException("A conta está inativa e não pode executar está operação.");
 		}
 
