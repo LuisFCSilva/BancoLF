@@ -99,7 +99,7 @@ public class ContaTest {
 		assertTrue(conta.isStatus() == false);
 	}
 	
-	@Test(expected=ContaInativaException.class)
+	@Test(expected = ContaInativaException.class)
 	public void inativarContaFalse() throws Exception {
 		conta.setStatus(false);
 		conta.inativarConta();

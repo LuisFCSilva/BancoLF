@@ -3,6 +3,10 @@ package objects;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.ArrayList;
+import java.util.List;
 
 import excecoes.BancoException;
 import excecoes.ContaInativaException;
@@ -26,6 +30,10 @@ public class Conta {
 	private LocalDateTime dataTransacao;
 
 	private NumberFormat formatoMoeda = NumberFormat.getCurrencyInstance();
+	private DateTimeFormatter formatadorDataSimples = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	private DateTimeFormatter formatadorDataMedium = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
+
+	private List<String> extrato = new ArrayList<>();
 
 	private enum Operacao {
 		SAQUE, DEPOSITO, TRANSFERENCIA, MENSALIDADE
@@ -130,8 +138,10 @@ public class Conta {
 
 	/**
 	 * 
-	 * @throws ContaInativaException -- Status da conta igual FALSE
-	 * @throws BancoException -- Retornar erro caso o saldo da conta esteja maior do que ZERO
+	 * @throws ContaInativaException
+	 *             -- Status da conta igual FALSE
+	 * @throws BancoException
+	 *             -- Retornar erro caso o saldo da conta esteja maior do que ZERO
 	 */
 	public void inativarConta() throws ContaInativaException, BancoException {
 		if (status == true && saldo == 0) {
@@ -145,12 +155,35 @@ public class Conta {
 
 	}
 
+	/**
+	 * Adicionar um String com os dados da operação em um ArrayList
+	 * 
+	 * @param valor
+	 * @param dataTransacao
+	 * @param tipoOperacao
+	 */
 	public void gravarExtrato(float valor, LocalDateTime dataTransacao, Operacao tipoOperacao) {
-
+		String textoExtrato;
+		textoExtrato = (formatadorDataMedium.format(dataTransacao) + " - " + tipoOperacao.toString() + " - "
+				+ formatoMoeda.format(valor));
+		extrato.add(textoExtrato);
 	}
-
+	
+	/**
+	 * Exibe o extrato inserido no ArrayList
+	 */
 	public void exibirExtrato() {
-
+		System.out.printf("\n\n\n%80s", "********* Extrato *********\n");
+		System.out.print("----------------------------------");
+		System.out.print("----------------------------------");
+		System.out.print("----------------------------------");
+		System.out.print("----------------------------------\n");
+		System.out.printf("\n%s %5s %5s", "Data ", " Tipo Operacao ", " Valor ");
+		System.out.println("\n_________________________________________________");
+		for (String listExtrato : extrato) {
+			System.out.println(listExtrato);
+			System.out.println("_________________________________________________");
+		}
 	}
 
 	public void exibirDetalhesConta() {
