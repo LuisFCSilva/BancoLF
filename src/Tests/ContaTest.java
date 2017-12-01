@@ -2,7 +2,6 @@ package Tests;
 
 import static org.junit.Assert.*;
 
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -36,76 +35,50 @@ public class ContaTest {
 		conta.sacar(-10f);
 	}
 
-	@Test(expected=ContaInativaException.class)
-	public void sacarContaInativa() throws Exception {
-		conta.setStatus(false);
-		conta.sacar(10f);
-	}
-	
-	@Test(expected=SaldoInsuficienteException.class)
+	@Test(expected = SaldoInsuficienteException.class)
 	public void sacarValorMaiorQueSaldo() throws Exception {
 		conta.sacar(100f);
 	}
-	
+
 	@Test
 	public void depositar50Reais() throws Exception {
 		conta.depositar(50f);
-		
+
 		assertEquals(100f, conta.getSaldo(), 0.1);
 	}
-	
-	@Test (expected=ValorInvalidoException.class)
+
+	@Test(expected = ValorInvalidoException.class)
 	public void depositarValorNegativo() throws Exception {
 		conta.depositar(-50);
 	}
-	
-	@Test (expected=ContaInativaException.class)
-	public void depositarContaInativa() throws Exception{
-		conta.setStatus(false);
-		conta.depositar(10f);
-	}
-	
+
 	@Test
 	public void pagarMensalidade50Reais() throws Exception {
 		conta.setMensalidade(50f);
 		conta.pagarMensalidade();
 		assertEquals(0f, conta.getSaldo(), 0.1);
 	}
-	
-	@Test(expected=ValorInvalidoException.class)
+
+	@Test(expected = ValorInvalidoException.class)
 	public void pagarMensalidadeValorNegativo() throws Exception {
 		conta.setMensalidade(-50f);
 		conta.pagarMensalidade();
 	}
-	
-	@Test(expected=SaldoInsuficienteException.class)
+
+	@Test(expected = SaldoInsuficienteException.class)
 	public void pagarMensalidadeSemSaldo() throws Exception {
 		conta.setMensalidade(100f);
 		conta.pagarMensalidade();
 	}
-	
-	@Test(expected=ContaInativaException.class)
-	public void pagarMensalidadeContaInativa() throws Exception {
-		conta.setStatus(false);
-		conta.setMensalidade(50f);
-		conta.pagarMensalidade();
-		
-	}
-	
+
 	@Test
 	public void inativarContaAtivaSaldoZero() throws Exception {
 		conta.setSaldo(0f);
 		conta.inativarConta();
 		assertTrue(conta.isStatus() == false);
 	}
-	
-	@Test(expected = ContaInativaException.class)
-	public void inativarContaFalse() throws Exception {
-		conta.setStatus(false);
-		conta.inativarConta();
-	}
-	
-	@Test(expected=BancoException.class)
+
+	@Test(expected = BancoException.class)
 	public void inativarContaComSaldo() throws Exception {
 		conta.inativarConta();
 	}

@@ -34,13 +34,20 @@ public class Conta {
 	private DateTimeFormatter formatadorDataMedium = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
 
 	private List<String> extrato = new ArrayList<>();
+	
+	public Conta() {
+		this.cliente = cliente;
+		this.status = true;
+		this.dataCriacao = LocalDate.now();
+		this.setNumeroConta(1234);
+	}
 
 	private enum Operacao {
 		SAQUE, DEPOSITO, TRANSFERENCIA, MENSALIDADE
 	}
 
 	public void exibirSaldo() {
-
+		System.out.println("Saldo atual: " + formatoMoeda.format(saldo));
 	}
 
 	/**
@@ -49,8 +56,6 @@ public class Conta {
 	 *            -- Valor do saque
 	 * @throws ValorInvalidoException
 	 *             -- Valores negativos ou igual a zero
-	 * @throws ContaInativaException
-	 *             -- Status da conta igual FALSE
 	 * @throws SaldoInsuficienteException
 	 *             -- Valor sacado MAIOR que o saldo da conta
 	 * @throws BancoException
@@ -66,8 +71,6 @@ public class Conta {
 			throw new SaldoInsuficienteException("Saldo insuficiente para realizar está operação.");
 		} else if (valor <= 0) {
 			throw new ValorInvalidoException("Valor inválido para executar está operação.");
-		} else if (status == false) {
-			throw new ContaInativaException("A conta está inativa e não pode executar está operação.");
 		} else {
 			throw new BancoException("Sistema temporariamente indisponível. Tente novamente mais tarde.");
 		}
@@ -79,8 +82,6 @@ public class Conta {
 	 *            -- Valor depositado
 	 * @throws ValorInvalidoException
 	 *             -- Valores negativos ou igual a zero
-	 * @throws ContaInativaException
-	 *             -- Status da conta igual FALSE
 	 * @throws BancoException
 	 *             -- Outros problemas e erros
 	 */
@@ -90,8 +91,6 @@ public class Conta {
 			System.out.println("Deposito no valor de " + formatoMoeda.format(valor) + " realizado com sucesso.");
 		} else if (valor <= 0) {
 			throw new ValorInvalidoException("Valor inválido para executar está operação.");
-		} else if (status == false) {
-			throw new ContaInativaException("A conta está inativa e não pode executar está operação.");
 		} else {
 			throw new BancoException("Sistema temporariamente indisponível. Tente novamente mais tarde.");
 		}
@@ -102,8 +101,6 @@ public class Conta {
 	 * 
 	 * @throws ValorInvalidoException
 	 *             -- Valores negativos ou igual a zero
-	 * @throws ContaInativaException
-	 *             -- Status da conta igual FALSE
 	 * @throws SaldoInsuficienteException
 	 *             -- Valor sacado MAIOR que o saldo da conta
 	 * @throws BancoException
@@ -120,8 +117,6 @@ public class Conta {
 			throw new ValorInvalidoException("Valor inválido para executar está operação.");
 		} else if (this.mensalidade > saldo) {
 			throw new SaldoInsuficienteException("Saldo insuficiente para realizar está operação.");
-		} else if (status == false) {
-			throw new ContaInativaException("A conta está inativa e não pode executar está operação.");
 		} else {
 			throw new BancoException("Sistema temporariamente indisponível. Tente novamente mais tarde.");
 		}
@@ -149,8 +144,8 @@ public class Conta {
 			System.out.println("Conta " + tipo + " inativada com sucesso.");
 		} else if (saldo > 0 && status) {
 			throw new BancoException("A conta possui saldo e não pode ser inativada.");
-		} else if (status == false) {
-			throw new ContaInativaException("A conta está inativa e não pode executar está operação.");
+		} else {
+			throw new BancoException("Sistema temporariamente indisponível. Tente novamente mais tarde.");
 		}
 
 	}
