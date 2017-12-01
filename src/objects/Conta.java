@@ -34,8 +34,11 @@ public class Conta {
 	private DateTimeFormatter formatadorDataMedium = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM);
 
 	private List<String> extrato = new ArrayList<>();
-	
+
 	public Conta() {
+	}
+
+	public Conta(Cliente cliente) {
 		this.cliente = cliente;
 		this.status = true;
 		this.dataCriacao = LocalDate.now();
@@ -128,7 +131,6 @@ public class Conta {
 	 * @param valor
 	 */
 	public void transferir(Conta conta, float valor) {
-
 	}
 
 	/**
@@ -163,7 +165,7 @@ public class Conta {
 				+ formatoMoeda.format(valor));
 		extrato.add(textoExtrato);
 	}
-	
+
 	/**
 	 * Exibe o extrato inserido no ArrayList
 	 */
@@ -182,7 +184,25 @@ public class Conta {
 	}
 
 	public void exibirDetalhesConta() {
+		System.out.print("----------------------------------");
+		System.out.print("----------------------------------");
+		System.out.print("----------------------------------");
+		System.out.print("----------------------------------\n");
+		System.out.printf("\n%23s", "Status da Conta:");
+		System.out.printf("\nCliente: %25s", this.cliente.getNome());
+		System.out.printf("\nTipo de Conta: %21s", this.getTipo());
+		System.out.printf("\nNº Conta: %24s", this.getNumeroConta());
+		System.out.printf("\nSaldo atual: %23s", formatoMoeda.format(saldo));
+		System.out.printf("\nStatus: %25s", this.converterStatus(status));
+		System.out.printf("\nConta criada em: %21s", dataCriacao.format(formatadorDataSimples));
+		System.out.print("\n----------------------------------");
+		System.out.print("----------------------------------");
+		System.out.print("----------------------------------");
+		System.out.print("----------------------------------\n");
+	}
 
+	public String converterStatus(boolean status) {
+		return status == true ? "Ativo" : "Inativo";
 	}
 
 	public Cliente getCliente() {

@@ -6,7 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import excecoes.BancoException;
-import excecoes.ContaInativaException;
 import excecoes.SaldoInsuficienteException;
 import excecoes.ValorInvalidoException;
 import objects.Conta;
@@ -81,6 +80,11 @@ public class ContaTest {
 	@Test(expected = BancoException.class)
 	public void inativarContaComSaldo() throws Exception {
 		conta.inativarConta();
+	}
+	
+	@Test
+	public void testarConversaoDeStatus() {
+		assertEquals("Ativo", conta.converterStatus(true));
 	}
 
 }
