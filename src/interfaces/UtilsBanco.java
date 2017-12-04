@@ -13,6 +13,8 @@ public interface UtilsBanco {
 
 	public void criarConta(Cliente cliente);
 
+	public void exibirOperacoes(Conta conta);
+	
 	public void repetirOperacoes(Conta conta);
 
 	public void finalizarOperacoes(Conta conta);
