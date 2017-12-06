@@ -1,6 +1,5 @@
 package exibicao;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -52,11 +51,9 @@ public class ExibicaoBanco implements UtilsBanco {
 			try {
 				conta = gerCont.carregarDadosArquivo();
 				exibirOperacoes(conta);
-			} catch (FileNotFoundException e) {
+			} catch (Exception e) {
 				System.out.println(e.getMessage());
 				criarUsuario();
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
 			break;
 		default:
