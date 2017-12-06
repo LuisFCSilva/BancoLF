@@ -22,7 +22,7 @@ public class ExibicaoBanco implements UtilsBanco {
 	private Conta conta;
 	private Cliente cliente;
 	private static GerenciamentoDadosConta gerCont = new GerenciamentoDadosConta();
-	
+
 	public ExibicaoBanco() {
 		apresentarBanco();
 		carregarConta();
@@ -106,13 +106,9 @@ public class ExibicaoBanco implements UtilsBanco {
 			apresentarBanco();
 			System.out.println("Bem vindo, " + conta.getCliente().getNome());
 			System.out.println("Escolha um tipo de operação:");
-			System.out.print( "[1] para ver o Saldo - " 
-							+ "[2] para saque - " 
-							+ "[3] para deposito - "
-							+ "[4] para transferência - " 
-							+ "[5] para pagar a Mensalidade - " 
-							+ "[6] para ver o extrato - "
-							+ "[0] para avançar: ");
+			System.out.print("[1] para ver o Saldo - " + "[2] para saque - " + "[3] para deposito - "
+					+ "[4] para transferência - " + "[5] para pagar a Mensalidade - " + "[6] para ver o extrato - "
+					+ "[0] para avançar: ");
 
 			int escolha = scan.nextInt();
 			float valor;
@@ -194,19 +190,19 @@ public class ExibicaoBanco implements UtilsBanco {
 	@Override
 	public void repetirOperacoes(Conta conta) {
 		System.out.print("\nDeseja executa uma nova operação: [S / N]: ");
-		
+
 		String escolha = scan.next();
-		
-		switch(escolha) {
-			case "S":
-				exibirOperacoes(conta);
-				break;
-			case "N":
-				finalizarOperacoes(conta);
-				break;
-			default:
-				exibirErro();
-				break;
+
+		switch (escolha) {
+		case "S":
+			exibirOperacoes(conta);
+			break;
+		case "N":
+			finalizarOperacoes(conta);
+			break;
+		default:
+			exibirErro();
+			break;
 		}
 	}
 
@@ -214,54 +210,52 @@ public class ExibicaoBanco implements UtilsBanco {
 	public void finalizarOperacoes(Conta conta) {
 		apresentarBanco();
 		System.out.println("Escolha uma das opção abaixo ..");
-		System.out.print( "[1] para ver o status da conta - " 
-						+ "[2] para inativar a conta - " 
-						+ "[3] para realizar nova operação - " 
-						+ "[0] para sair: ");
-		
+		System.out.print("[1] para ver o status da conta - " + "[2] para inativar a conta - "
+				+ "[3] para realizar nova operação - " + "[0] para sair: ");
+
 		int escolha = scan.nextInt();
-		
-		switch(escolha) {
-			case 1:
-				conta.exibirDetalhesConta();
-				finalizarOperacoes(conta, "");
-				break;
-			case 2:
-				try {
-					conta.inativarConta();
-				} catch (ContaInativaException e) {
-					System.out.println(e.getMessage());
-					finalizarOperacoes(conta);
-				} catch (BancoException e) {
-					System.out.println(e.getMessage());
-					finalizarOperacoes(conta);
-				} finally {
-					finalizarOperacoes(conta, "");
-				}
-				break;
-			case 3:
-				if(conta.isStatus()) {
-				exibirOperacoes(conta);
-				} else {
-					System.out.println("\nConta inativa. Impossível realizar novas operações.");
-				}
-				finalizarOperacoes(conta, "");
-				break;
-			case 0:
-				finalizarGravarConta();
-				break;
-			default:
-				exibirErro();
+
+		switch (escolha) {
+		case 1:
+			conta.exibirDetalhesConta();
+			finalizarOperacoes(conta, "");
+			break;
+		case 2:
+			try {
+				conta.inativarConta();
+			} catch (ContaInativaException e) {
+				System.out.println(e.getMessage());
 				finalizarOperacoes(conta);
-				break;
+			} catch (BancoException e) {
+				System.out.println(e.getMessage());
+				finalizarOperacoes(conta);
+			} finally {
+				finalizarOperacoes(conta, "");
+			}
+			break;
+		case 3:
+			if (conta.isStatus()) {
+				exibirOperacoes(conta);
+			} else {
+				System.out.println("\nConta inativa. Impossível realizar novas operações.");
+			}
+			finalizarOperacoes(conta, "");
+			break;
+		case 0:
+			finalizarGravarConta();
+			break;
+		default:
+			exibirErro();
+			finalizarOperacoes(conta);
+			break;
 		}
-		
+
 	}
 
 	public void exibirErro() {
 		System.out.println("\nO valor informado é inválido." + "\nTente novamente...");
 	}
-	
+
 	public void finalizarGravarConta() {
 		try {
 			gerCont.gravarDadosArquivo(conta);
@@ -277,7 +271,7 @@ public class ExibicaoBanco implements UtilsBanco {
 		System.out.print("----------------------------------\n");
 		System.exit(0);
 	}
-	
+
 	public void finalizarOperacoes(Conta conta, String str) {
 		System.out.print("\nDeseja realizar outra operação? [S/N]: ");
 
