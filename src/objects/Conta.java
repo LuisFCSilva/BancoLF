@@ -65,7 +65,7 @@ public class Conta {
 	 *             -- Outros problemas e erros
 	 */
 	public void sacar(float valor)
-			throws ValorInvalidoException, ContaInativaException, SaldoInsuficienteException, BancoException {
+			throws ValorInvalidoException, SaldoInsuficienteException, BancoException {
 		if (valor <= saldo && valor > 0 && status) {
 			saldo -= valor;
 			System.out.println("Saque no valor de " + formatoMoeda.format(valor) + " realizado com sucesso.");
@@ -88,7 +88,7 @@ public class Conta {
 	 * @throws BancoException
 	 *             -- Outros problemas e erros
 	 */
-	public void depositar(float valor) throws ValorInvalidoException, ContaInativaException, BancoException {
+	public void depositar(float valor) throws ValorInvalidoException, BancoException {
 		if (valor > 0 && status) {
 			saldo += valor;
 			System.out.println("Deposito no valor de " + formatoMoeda.format(valor) + " realizado com sucesso.");
@@ -110,7 +110,7 @@ public class Conta {
 	 *             -- Outros problemas e erros
 	 */
 	public void pagarMensalidade()
-			throws ValorInvalidoException, SaldoInsuficienteException, ContaInativaException, BancoException {
+			throws ValorInvalidoException, SaldoInsuficienteException, BancoException {
 		if (this.mensalidade <= saldo && this.mensalidade > 0 && status) {
 			saldo -= this.mensalidade;
 			System.out
