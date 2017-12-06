@@ -22,6 +22,11 @@ public class ExibicaoBanco implements UtilsBanco {
 	private Conta conta;
 	private Cliente cliente;
 	private static GerenciamentoDadosConta gerCont = new GerenciamentoDadosConta();
+	
+	public ExibicaoBanco() {
+		apresentarBanco();
+		carregarConta();
+	}
 
 	@Override
 	public void apresentarBanco() {
@@ -219,6 +224,7 @@ public class ExibicaoBanco implements UtilsBanco {
 		switch(escolha) {
 			case 1:
 				conta.exibirDetalhesConta();
+				finalizarOperacoes(conta, "");
 				break;
 			case 2:
 				try {
@@ -239,6 +245,7 @@ public class ExibicaoBanco implements UtilsBanco {
 				} else {
 					System.out.println("\nConta inativa. Impossível realizar novas operações.");
 				}
+				finalizarOperacoes(conta, "");
 				break;
 			case 0:
 				finalizarGravarConta();
@@ -281,19 +288,7 @@ public class ExibicaoBanco implements UtilsBanco {
 			finalizarOperacoes(conta);
 			break;
 		case "N":
-			try {
-				gerCont.gravarDadosArquivo(conta);
-			} catch (BancoException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			System.out.printf("%80s", "Obrigado por utilizar o banco Deycoval!\n");
-			System.out.print("----------------------------------");
-			System.out.print("----------------------------------");
-			System.out.print("----------------------------------");
-			System.out.print("----------------------------------\n");
-			System.exit(0);
+			finalizarGravarConta();
 			break;
 		default:
 			System.out.println("\nOpção invalida." + "Tente novamente ..");
