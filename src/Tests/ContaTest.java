@@ -8,15 +8,19 @@ import org.junit.Test;
 import excecoes.BancoException;
 import excecoes.SaldoInsuficienteException;
 import excecoes.ValorInvalidoException;
+import objects.Cliente;
 import objects.Conta;
+import objects.ContaCorrente;
 
 public class ContaTest {
 
 	private Conta conta = null;
+	private Cliente cliente = null;
 
 	@Before
 	public void inicializar() {
-		conta = new Conta();
+		cliente = new Cliente("Teste");
+		conta = new ContaCorrente(cliente);
 		conta.setSaldo(50f);
 		conta.setStatus(true);
 	}

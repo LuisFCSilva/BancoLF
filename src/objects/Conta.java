@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import excecoes.BancoException;
 import excecoes.ContaInativaException;
@@ -18,7 +19,7 @@ import excecoes.ValorInvalidoException;
  * @author Luis Fernando
  *
  */
-public class Conta {
+public abstract class Conta {
 
 	private Cliente cliente;
 	private float saldo;
@@ -42,7 +43,7 @@ public class Conta {
 		this.cliente = cliente;
 		this.status = true;
 		this.dataCriacao = LocalDate.now();
-		this.setNumeroConta(1234);
+		this.setNumeroConta(99999);
 	}
 
 	private enum Operacao {
@@ -183,6 +184,9 @@ public class Conta {
 		}
 	}
 
+	/**
+	 * Exibição dos detalhes da conta no Console
+	 */
 	public void exibirDetalhesConta() {
 		System.out.print("----------------------------------");
 		System.out.print("----------------------------------");
@@ -201,6 +205,11 @@ public class Conta {
 		System.out.print("----------------------------------\n");
 	}
 
+	/**
+	 * Conversão simples do status usando operador ternário
+	 * @param status
+	 * @return
+	 */
 	public String converterStatus(boolean status) {
 		return status == true ? "Ativo" : "Inativo";
 	}
@@ -222,11 +231,18 @@ public class Conta {
 	}
 
 	public int getNumeroConta() {
-		return numeroConta;
+		if (numeroConta == 0) {
+			setNumeroConta(99999);
+			return numeroConta;
+		} else {
+			return numeroConta;
+		}
 	}
 
 	public void setNumeroConta(int numeroConta) {
-		this.numeroConta = numeroConta;
+		Random r = new Random(numeroConta);
+		int numero = r.nextInt();
+		this.numeroConta = numero;
 	}
 
 	public float getMensalidade() {

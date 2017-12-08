@@ -23,7 +23,11 @@ public class GerenciamentoDadosConta implements GerenciamentoContas {
 	private static final String ARQUIVO_CONTA = "conta.txt";
 	private Conta conta;
 	private Cliente cliente;
-
+	
+	
+	/**
+	 * Cria um arquivo caso não exista e escreve os dados neste arquivo
+	 */
 	@Override
 	public void gravarDadosArquivo(Conta conta) throws BancoException, IOException {
 		File arquivo = new File(ARQUIVO_CONTA);
@@ -41,7 +45,11 @@ public class GerenciamentoDadosConta implements GerenciamentoContas {
 		}
 
 	}
-
+	
+	
+	/**
+	 * Lê os dados do arquivo e insere no construtor 
+	 */
 	@Override
 	public Conta carregarDadosArquivo() throws FileNotFoundException, IOException {
 		try (BufferedReader reader = new BufferedReader(new FileReader(ARQUIVO_CONTA))) {
